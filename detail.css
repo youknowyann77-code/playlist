@@ -7,9 +7,9 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: #000; /* Dasar hitam jika video belum load */
+    background: #000; 
     z-index: 999;
-    padding: 0; /* Hilangkan padding agar video mepet ke layar */
+    padding: 0; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,27 +28,26 @@
     pointer-events: auto;
 }
 
-/* --- LOGIKA VIDEO BACKGROUND (WAJIB ADA) --- */
+/* --- LOGIKA VIDEO BACKGROUND --- */
 .video-bg {
-    position: absolute; /* Membuat video melayang di belakang */
+    position: absolute; 
     top: 50%;
     left: 50%;
     min-width: 100%; 
     min-height: 100%;
     width: auto;
     height: auto;
-    z-index: -1; /* Taruh di paling bawah */
+    z-index: -1; 
     transform: translateX(-50%) translateY(-50%);
-    object-fit: cover; /* Agar video memenuhi layar tanpa gepeng */
-    opacity: 0.6; /* Membuat video agak gelap agar lirik mudah dibaca */
-    filter: brightness(0.7); /* Menambah kontras */
+    object-fit: cover; 
+    opacity: 0.6; 
+    filter: brightness(0.7); 
 }
 
-/* --- KOTAK PLAYER (EFEK GLASSMORPISM) --- */
+/* --- KOTAK PLAYER --- */
 .player-content {
-    /* Background ungu Mas dibuat transparan (RGBA) */
     background: rgba(30, 18, 49, 0.75); 
-    backdrop-filter: blur(10px); /* Efek blur kaca di belakang player */
+    backdrop-filter: blur(10px); 
     -webkit-backdrop-filter: blur(10px);
     
     width: 90%;
@@ -57,7 +56,7 @@
     padding: 25px;
     text-align: center;
     box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,255,255,0.1); /* Garis tipis biar elegan */
+    border: 1px solid rgba(255,255,255,0.1); 
     position: relative;
     z-index: 1;
 }
@@ -82,11 +81,13 @@
     text-align: left;
 }
 
+/* --- FIX GAMBAR MELEBAR --- */
 #detail-img {
     width: 65px;
     height: 65px;
     border-radius: 12px;
     object-fit: cover;
+    flex-shrink: 0;
     box-shadow: 0 5px 15px rgba(0,0,0,0.4);
 }
 
@@ -99,106 +100,78 @@
 
 #detail-artist { color: #ccc; font-size: 13px; }
 
-/* --- LIRIK (DENGAN KOTAK UI BARU) --- */
+/* --- LIRIK (OPTIMALISASI ANTI PATAH-PATAH) --- */
 .lyrics-container {
     height: 180px;
-    overflow-y: auto;
+    overflow-y: hidden; 
     text-align: center;
     margin-bottom: 20px;
-    padding: 20px 10px; /* Padding ditambah biar teks nggak nempel ke kotak */
+    padding: 80px 25px; 
     font-size: 15px;
-    line-height: 2;
+    line-height: 1.6;
     color: rgba(255, 255, 255, 0.9);
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; 
+    pointer-events: none; 
 
-    /* --- TAMBAHAN KOTAK LIRIK --- */
-    background: rgba(255, 255, 255, 0.08); /* Kotak transparan */
+    background: rgba(255, 255, 255, 0.08); 
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
 
-    /* Masking agar lirik pudar di atas dan bawah */
-    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-    -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
+
+    /* Optimasi Performa Scroll */
+    will-change: transform;
+    transform: translateZ(0);
+    contain: content;
 }
 
 .lyrics-container::-webkit-scrollbar { display: none; }
 
-/* --- ICON MATERIAL --- */
-.material-icons {
-    font-family: 'Material Icons';
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
-    user-select: none;
+/* --- LOGIKA BARIS LIRIK (TRANSISI FLAT/DIAM) --- */
+.lyric-line {
+    opacity: 0.3; 
+    transition: opacity 0.4s ease, transform 0.4s ease; 
+    margin: 25px 0;
+    transform: scale(0.9);
+    display: block;
+    min-height: 30px; 
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+
+    /* Ringankan beban render tiap baris */
+    contain: layout style;
 }
 
-/* --- PROGRESS AREA --- */
-.progress-area { margin-bottom: 25px; }
-
-.time-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    color: #ddd;
-    margin-bottom: 8px;
+/* LIRIK AKTIF (FOKUS LANGSUNG) */
+.active-lyric {
+    opacity: 1 !important;
+    transform: scale(1.05); 
+    color: #ffffff;
     font-weight: bold;
+    text-shadow: 0 0 10px rgba(255,255,255,0.4);
 }
 
-.bar-bg {
-    width: 100%;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    cursor: pointer;
-    overflow: hidden;
+/* FITUR REFF */
+.reff-style.active-lyric {
+    font-size: 20px !important; 
+    transform: scale(1.1); 
+    text-shadow: 0 0 15px rgba(255,255,255,0.8);
 }
 
-/* PROGRESS BAR PUTIH MENYALA */
-.bar-fill {
-    height: 100%;
-    background: #ffffff;
-    width: 0%; 
-    transition: width 0.1s linear;
-    box-shadow: 0 0 12px rgba(255, 255, 255, 1), 
-                0 0 4px rgba(255, 255, 255, 0.6);
-}
-
-/* --- KONTROL TOMBOL --- */
-.main-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px;
-    margin-bottom: 15px;
-}
-
-.play-btn {
-    background: #ffffff; /* Tombol play jadi putih biar kontras */
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 20px rgba(255,255,255,0.2);
-    transition: transform 0.2s;
-}
-
-.play-btn .material-icons {
-    color: #1e1231 !important; /* Icon di dalam tombol play jadi gelap */
-    font-size: 35px !important;
-}
-
+/* --- ICON & PROGRESS --- */
+.material-icons { font-family: 'Material Icons'; font-size: 24px; color: white; cursor: pointer; user-select: none; }
+.progress-area { margin-bottom: 25px; }
+.time-info { display: flex; justify-content: space-between; font-size: 10px; color: #ddd; margin-bottom: 8px; font-weight: bold; }
+.bar-bg { width: 100%; height: 5px; background: rgba(255, 255, 255, 0.15); border-radius: 10px; cursor: pointer; overflow: hidden; }
+.bar-fill { height: 100%; background: #ffffff; width: 0%; transition: width 0.1s linear; box-shadow: 0 0 12px #fff, 0 0 4px rgba(255,255,255,0.6); }
+.main-controls { display: flex; justify-content: space-between; align-items: center; padding: 0 10px; margin-bottom: 15px; }
+.play-btn { background: #ffffff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(255,255,255,0.2); transition: transform 0.2s; }
+.play-btn .material-icons { color: #1e1231 !important; font-size: 35px !important; }
 .play-btn:active { transform: scale(0.9); }
-
-.icon { 
-    font-size: 24px !important; 
-    opacity: 0.8; 
-}
-
 .footer-credit { font-size: 9px; color: rgba(255,255,255,0.4); margin-top: 15px; }
-
 .hidden { display: none !important; }
