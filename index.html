@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Playlist Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="detail.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+    <div id="video-preload">
+        <video id="vd1" class="bg-video" loop muted playsinline><source src="vd1.mp4" type="video/mp4"></video>
+        <video id="vd2" class="bg-video" loop muted playsinline><source src="preview2.mp4" type="video/mp4"></video>
+        <video id="vd3" class="bg-video" loop muted playsinline><source src="preview3.mp4" type="video/mp4"></video>
+        <video id="vd4" class="bg-video" loop muted playsinline><source src="preview4.mp4" type="video/mp4"></video>
+        <video id="vd5" class="bg-video" loop muted playsinline><source src="preview5.mp4" type="video/mp4"></video>
+        <video id="vd6" class="bg-video" loop muted playsinline><source src="preview6.mp4" type="video/mp4"></video>
+    </div>
+
+    <div id="video-detail-list" style="display: none;">
+        <video id="bg-detail-1" loop muted playsinline><source src="vd1.mp4" type="video/mp4"></video>
+        <video id="bg-detail-2" loop muted playsinline><source src="bg_full_2.mp4" type="video/mp4"></video>
+        <video id="bg-detail-3" loop muted playsinline><source src="bg_full_3.mp4" type="video/mp4"></video>
+        <video id="bg-detail-4" loop muted playsinline><source src="bg_full_4.mp4" type="video/mp4"></video>
+        <video id="bg-detail-5" loop muted playsinline><source src="bg_full_5.mp4" type="video/mp4"></video>
+        <video id="bg-detail-6" loop muted playsinline><source src="bg_full_6.mp4" type="video/mp4"></video>
+    </div>
+
+    <div id="page-1" class="container">
+        <h1>Daftar Lagu</h1>
+        <div id="playlist"></div>
+    </div>
+
+    <div id="page-2" class="detail-wrapper hidden">
+        <video id="detail-video-bg" class="video-bg" loop muted playsinline autoplay></video>
+        
+        <div class="player-content">
+            <div class="top-nav">
+                <button id="btn-back">
+                    <span class="material-icons" style="font-size: 14px; vertical-align: middle;">arrow_back</span> Kembali
+                </button>
+            </div>
+
+            <div class="song-header">
+                <img id="detail-img" src="" alt="Album Art">
+                <div class="text-meta">
+                    <h2 id="detail-title"></h2>
+                    <p id="detail-artist"></p>
+                </div>
+            </div>
+
+            <div id="detail-lyrics" class="lyrics-container"></div>
+
+            <div class="progress-area">
+                <div class="time-info">
+                    <span id="current-time">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+                <div class="bar-bg">
+                    <div class="bar-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+            
+            <div class="main-controls">
+                <span class="material-icons icon">shuffle</span>
+                <span class="material-icons icon">skip_previous</span>
+                <div class="play-btn">
+                    <span class="material-icons">pause</span>
+                </div>
+                <span class="material-icons icon">skip_next</span>
+                <span class="material-icons icon">repeat</span>
+            </div>
+            
+            <p class="footer-credit">/code by: @Anuza</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

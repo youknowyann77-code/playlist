@@ -1,0 +1,204 @@
+/* detail.css */
+
+/* --- WRAPPER HALAMAN KEDUA (FULL SCREEN) --- */
+.detail-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000; /* Dasar hitam jika video belum load */
+    z-index: 999;
+    padding: 0; /* Hilangkan padding agar video mepet ke layar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.detail-wrapper.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* --- LOGIKA VIDEO BACKGROUND (WAJIB ADA) --- */
+.video-bg {
+    position: absolute; /* Membuat video melayang di belakang */
+    top: 50%;
+    left: 50%;
+    min-width: 100%; 
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1; /* Taruh di paling bawah */
+    transform: translateX(-50%) translateY(-50%);
+    object-fit: cover; /* Agar video memenuhi layar tanpa gepeng */
+    opacity: 0.6; /* Membuat video agak gelap agar lirik mudah dibaca */
+    filter: brightness(0.7); /* Menambah kontras */
+}
+
+/* --- KOTAK PLAYER (EFEK GLASSMORPISM) --- */
+.player-content {
+    /* Background ungu Mas dibuat transparan (RGBA) */
+    background: rgba(30, 18, 49, 0.75); 
+    backdrop-filter: blur(10px); /* Efek blur kaca di belakang player */
+    -webkit-backdrop-filter: blur(10px);
+    
+    width: 90%;
+    max-width: 380px;
+    border-radius: 30px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1); /* Garis tipis biar elegan */
+    position: relative;
+    z-index: 1;
+}
+
+.top-nav { text-align: left; margin-bottom: 20px; }
+#btn-back {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 11px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.song-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+#detail-img {
+    width: 65px;
+    height: 65px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+#detail-title { 
+    font-size: 18px; 
+    margin-bottom: 2px; 
+    color: white; 
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+#detail-artist { color: #ccc; font-size: 13px; }
+
+/* --- LIRIK (DENGAN KOTAK UI BARU) --- */
+.lyrics-container {
+    height: 180px;
+    overflow-y: auto;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px 10px; /* Padding ditambah biar teks nggak nempel ke kotak */
+    font-size: 15px;
+    line-height: 2;
+    color: rgba(255, 255, 255, 0.9);
+    scroll-behavior: smooth;
+
+    /* --- TAMBAHAN KOTAK LIRIK --- */
+    background: rgba(255, 255, 255, 0.08); /* Kotak transparan */
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+
+    /* Masking agar lirik pudar di atas dan bawah */
+    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+}
+
+.lyrics-container::-webkit-scrollbar { display: none; }
+
+/* --- ICON MATERIAL --- */
+.material-icons {
+    font-family: 'Material Icons';
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* --- PROGRESS AREA --- */
+.progress-area { margin-bottom: 25px; }
+
+.time-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #ddd;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.bar-bg {
+    width: 100%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/* PROGRESS BAR PUTIH MENYALA */
+.bar-fill {
+    height: 100%;
+    background: #ffffff;
+    width: 0%; 
+    transition: width 0.1s linear;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 1), 
+                0 0 4px rgba(255, 255, 255, 0.6);
+}
+
+/* --- KONTROL TOMBOL --- */
+.main-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
+
+.play-btn {
+    background: #ffffff; /* Tombol play jadi putih biar kontras */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(255,255,255,0.2);
+    transition: transform 0.2s;
+}
+
+.play-btn .material-icons {
+    color: #1e1231 !important; /* Icon di dalam tombol play jadi gelap */
+    font-size: 35px !important;
+}
+
+.play-btn:active { transform: scale(0.9); }
+
+.icon { 
+    font-size: 24px !important; 
+    opacity: 0.8; 
+}
+
+.footer-credit { font-size: 9px; color: rgba(255,255,255,0.4); margin-top: 15px; }
+
+.hidden { display: none !important; }
